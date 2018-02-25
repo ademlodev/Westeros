@@ -17,13 +17,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = UIColor.cyan // se podria poner solo .cyan
         
-        // la hacemos visible al no ser storyboard
+        window?.backgroundColor = .cyan
         window?.makeKeyAndVisible()
         
-        let root = UIViewController()
-        window?.rootViewController = root
+        
+        // Crear unos modelos
+        let houses = Repository.local.houses
+        
+        // Crear los controladorer
+//        let starkHouseViewController = HouseDetailViewController(model: starkHouse)
+//
+//        let lannisterHouseViewController = HouseDetailViewController(model: lannisterHouse)
+        
+// esto tb se puede hacer con map
+//        var controllers = [UIViewController]()
+//        for house in houses{
+//            controllers.append(HouseDetailViewController(model: house))
+//        }
+        
+        
+//        let controllers = houses.map{
+//            house in return HouseDetailViewController(model: house).wrappedInNavigation()
+//        }
+        
+//        let starkNavigationController = UINavigationController(rootViewController: starkHouseViewController)
+//
+//        let lanisterNavigationController = UINavigationController(rootViewController: lannisterHouseViewController)
+        
+        // Creamos los combinadores
+//empezamos asi        let tabBarViewController = UITabBarController()
+//        tabBarViewController.viewControllers = [
+//            starkHouseViewController.wrappedInNavigation(), lannisterHouseViewController.wrappedInNavigation()
+//        ]
+        
+//        var navigationsControllers = [UINavigationController]()
+//        for controller in controllers{
+//            navigationsControllers.append(controller.wrappedInNavigation())
+//        }
+        
+        //Creamos el tabBar View Controller para mostrar los detail
+//        let tabBarViewController = UITabBarController()
+//        tabBarViewController.viewControllers =
+//            houses
+//                .map{return HouseDetailViewController(model: $0)}
+//                .map{$0.wrappedInNavigation()}
+        
+        //Creamos el table
+        let houseListVC = HouseListViewController(house: houses)
+        let lastSelectedHouse = houseListVC.lastSelectedHouse()
+        let houseDetailVC = HouseDetailViewController(model: lastSelectedHouse)
+        
+        //Asignar delegados
+        houseListVC.delegate = houseDetailVC
+        
+        let splitVC = UISplitViewController()
+        splitVC.viewControllers = [
+            houseListVC.wrappedInNavigation(),
+            houseDetailVC.wrappedInNavigation()
+        ]
+        
+        // Asignamos el rootVC
+        window?.rootViewController = splitVC
         
         return true
     }
