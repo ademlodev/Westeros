@@ -10,7 +10,7 @@ import Foundation
 
 final class Person{
     let name: String
-    let house: House
+    weak var house: House?
     private let _alias: String?
     
     var alias: String{
@@ -20,7 +20,7 @@ final class Person{
 //        }else{
 //            return ""
 //        }
-        return _alias ?? ""
+        return _alias ?? "" //Mejor hacerlo asi que con let (comentado arriba)
     }
     
     init(name: String,alias: String? = nil, house: House) {
@@ -28,26 +28,18 @@ final class Person{
         self.house = house
         _alias = alias
     }
-    
-//    init(name: String, house: House) {
-//        self.name = name
-//        self.house = house
-//        _alias = nil
-//    }
-    
-    
 }
 
 extension Person {
     var fullName: String{
-        return "\(name) \(house.name)"
+        return "\(name) \(house?.name ?? "")"
     }
 }
 
 // MARK: - Proxies
 extension Person{
     var proxyForEquality: String{
-        return "\(name) \(alias) \(house.name)"
+        return "\(name) \(alias) \(house?.name ?? "")"
     }
     
     var proxyForComparison: String{
