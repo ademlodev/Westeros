@@ -22,7 +22,7 @@ class EpisodeTests: XCTestCase {
         var dateEpisode = formatter.date(from: "2011/04/17")
         
         season1 = Season(name: "Game of Thrones Season 1", releaseDate: dateEpisode!)
-        episode1x1 = Episode(title: "Winter Is Coming", emisionDate: dateEpisode!, season: season1)
+        episode1x1 = Episode(title: "Winter Is Coming", emisionDate: dateEpisode!, season: season1,resumen: )
         dateEpisode = formatter.date(from: "2011/04/24")
         episode1x2 = Episode(title: "The Kingsroad", emisionDate: dateEpisode!, season: season1)
     }

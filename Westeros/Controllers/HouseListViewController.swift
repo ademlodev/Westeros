@@ -24,7 +24,7 @@ class HouseListViewController: UITableViewController {
     init(house: [House]) {
         self.house = house
         super.init(style: .plain)
-        title = "Westeros"
+        title = "Houses"
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -24,7 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Crear unos modelos
         let houses = Repository.local.houses
+        let seasons = Repository.local.seasons
         
+//>>FJGO Practica de Alexandre desde el primer dia
         // Crear los controladorer
 //        let starkHouseViewController = HouseDetailViewController(model: starkHouse)
 //
@@ -46,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let lanisterNavigationController = UINavigationController(rootViewController: lannisterHouseViewController)
         
         // Creamos los combinadores
-//empezamos asi        let tabBarViewController = UITabBarController()
+//        let tabBarViewController = UITabBarController()
 //        tabBarViewController.viewControllers = [
 //            starkHouseViewController.wrappedInNavigation(), lannisterHouseViewController.wrappedInNavigation()
 //        ]
@@ -62,8 +64,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            houses
 //                .map{return HouseDetailViewController(model: $0)}
 //                .map{$0.wrappedInNavigation()}
+//<<FJGO Practica de Alexandre desde el primer dia
         
-        //Creamos el table
+//>>FJGO Solo con lista de houses
+//        //Creamos el table
+//        let houseListVC = HouseListViewController(house: houses)
+//        let lastSelectedHouse = houseListVC.lastSelectedHouse()
+//        let houseDetailVC = HouseDetailViewController(model: lastSelectedHouse)
+//
+//        //Asignar delegados
+//        houseListVC.delegate = houseDetailVC
+//
+//        let splitVC = UISplitViewController()
+//        splitVC.viewControllers = [
+//            houseListVC.wrappedInNavigation(),
+//            houseDetailVC.wrappedInNavigation()
+//        ]
+//
+//        // Asignamos el rootVC
+//        window?.rootViewController = splitVC
+//<<FJGO Solo con lista de houses
+        
         let houseListVC = HouseListViewController(house: houses)
         let lastSelectedHouse = houseListVC.lastSelectedHouse()
         let houseDetailVC = HouseDetailViewController(model: lastSelectedHouse)
@@ -71,9 +92,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Asignar delegados
         houseListVC.delegate = houseDetailVC
         
+        let seasonListVC = SeasonListViewControler(season: seasons)
+        //TODO let lastSelectedSeason = houseListVC.lastSelectedHouse()
+        //TODO let seasonDetailVC = HouseDetailViewController(model: lastSelectedHouse)
+        
+        let houseNC = UINavigationController(rootViewController: houseListVC)
+        let seasonNC = UINavigationController(rootViewController: seasonListVC)
+        
+        let tabBarVC = UITabBarController()
+        tabBarVC.viewControllers = [
+            houseNC,
+            seasonNC
+        ]
+        
         let splitVC = UISplitViewController()
         splitVC.viewControllers = [
-            houseListVC.wrappedInNavigation(),
+            tabBarVC.wrappedInNavigation(),
             houseDetailVC.wrappedInNavigation()
         ]
         

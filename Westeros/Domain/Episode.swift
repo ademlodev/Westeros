@@ -12,12 +12,14 @@ import Foundation
 final class Episode{
     let title: String
     let emisionDate: Date
+    let resumen: String
     weak var season: Season?
     
-    init(title: String, emisionDate: Date, season: Season){
+    init(title: String, emisionDate: Date, season: Season, resumen: String){
         self.title = title
         self.emisionDate = emisionDate
         self.season = season
+        self.resumen = resumen
     }
 }
 
