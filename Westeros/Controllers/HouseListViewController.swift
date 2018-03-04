@@ -78,12 +78,6 @@ class HouseListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Averigurar que casa han pinchado
         let _house = house[indexPath.row]
-        
-//        //Crear un controlador de detalle de esa casa
-//        let houseDetailViewController = HouseDetailViewController(model: _house)
-//
-//        //Hacer un push
-//        navigationController?.pushViewController(houseDetailViewController, animated: true)
 
         //Avisamos al delegate
         delegate?.HouseListViewController(self, didSelectHouse: _house)

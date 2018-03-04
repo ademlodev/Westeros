@@ -45,9 +45,16 @@ class RepositoryTest: XCTestCase {
     func testLocalRepositoryReturnHousesByCaseInsensitively(){
         let stark = Repository.local.house(named: "sTarK")
         XCTAssertEqual(stark?.name, "Stark")
-        
+
         let keepcoding = Repository.local.house(named: "Keepcoding")
         XCTAssertNil(keepcoding)
+
+    }
+
+    func testLocalRepositoryReturnHousesByCaseInsensitivelyEnum(){
+        let stark = Repository.local.houseEnum(named: .Stark)
+        XCTAssertEqual(stark?.name, "Stark")
+
     }
     
     func testLocalRepositoryReturnSeasonsByCaseInsensitively(){
@@ -64,7 +71,7 @@ class RepositoryTest: XCTestCase {
     }
     
     func testSeasonFiltering(){
-        let filtered = Repository.local.houses(filteredBy: { $0.count == 1 })
-        XCTAssertEqual(filtered.count, 1)
+        let filtered = Repository.local.seasons(filteredBy: { $0.count == 2 })
+        XCTAssertEqual(filtered.count, 7)
     }
 }

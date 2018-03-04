@@ -20,7 +20,7 @@ class SeasonDetailViewController: UIViewController {
     init(seasonObj: Season) {
         self.season = seasonObj
         super.init(nibName: nil, bundle: Bundle (for: type(of: self)))
-        title = season.name
+        title = seasonObj.name
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,12 +35,12 @@ class SeasonDetailViewController: UIViewController {
         //Model -> View
         nameSeason.text = "Season \(season.name)"
         releaseDate.text = dateFormatter.string(for: season.releaseDate)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        title = season.name
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = season.name
+        self.navigationItem.backBarButtonItem = backItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,9 +58,17 @@ class SeasonDetailViewController: UIViewController {
     
     @objc func displayEpisodes(){
         //Creamos el episodeVC
-        // TODO: Implement!!
         let episodeVC = EpisodeListViewController(episodes: season.sortedEpisodes)
         
         navigationController?.pushViewController(episodeVC, animated: true)
     }
 }
+
+extension SeasonDetailViewController: SeasonListViewControllerDelegate{
+    func SeasonListViewController(_ vc: SeasonListViewController, didSelectSeason season: Season) {
+        self.season = season
+        syncModelWithView()
+    }
+}
+
+

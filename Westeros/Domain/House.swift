@@ -11,6 +11,7 @@ import UIKit
 typealias Words = String
 typealias Members = Set<Person>
 
+
 // Mark: - House
 final class House{
     let name: String

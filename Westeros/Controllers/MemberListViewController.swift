@@ -8,14 +8,20 @@
 
 import UIKit
 
+protocol MemberListViewControllerDelegate: class {
+    func MemberListViewController(_ vc:MemberListViewController, didSelectMember: Person)
+}
+
 class MemberListViewController: UITableViewController {
     
-    let member: [Person]!
+    var member: [Person]!
+    weak var delegate: MemberListViewControllerDelegate?
     
     init(member: [Person]) {
         self.member = member
         super.init(style: .plain)
         title = "Members"
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -27,13 +33,8 @@ class MemberListViewController: UITableViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -46,7 +47,6 @@ class MemberListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "MemberCell"
-        
         
         //Crear una celda
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) ??
@@ -61,5 +61,23 @@ class MemberListViewController: UITableViewController {
         //Sincroniza el modelo con las celdas
         cell.textLabel?.text = h.fullName
     }
+    
+    // MARK: Table View Delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //Averigurar que casa han pinchado
+        let _member = member[indexPath.row]
+        
+        let memberDetailViewController = MemberDetailViewController(member: _member)
+        navigationController?.pushViewController(memberDetailViewController, animated: true)
 
+    }
+
+    // MARK: - Sync
+    func syncModelWithView() {
+        //Model -> View
+        title = "Members"
+        tableView.reloadData()
+        
+    }
+    
 }

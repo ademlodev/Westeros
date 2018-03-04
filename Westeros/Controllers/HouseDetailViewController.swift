@@ -23,6 +23,8 @@ class HouseDetailViewController: UIViewController {
         self.model = model
         super.init(nibName: nil, bundle: Bundle (for: type(of: self)))
         title = model.name
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,6 +37,10 @@ class HouseDetailViewController: UIViewController {
         houseNameLabel.text = "House \(model.name)"
         sigilImageView.image = model.sigil.image
         wordsLabel.text = model.words
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = model.name
+        self.navigationItem.backBarButtonItem = backItem
     }
     
     override func viewDidLoad() {
@@ -66,9 +72,8 @@ class HouseDetailViewController: UIViewController {
     
     @objc func displayMembers(){
         //Creamos el memberVC
-        // TODO: Implement!!
         let memberVC = MemberListViewController(member: model.sortedMembers)
-        
+
         navigationController?.pushViewController(memberVC, animated: true)
     }
 
