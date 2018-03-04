@@ -28,12 +28,22 @@ class MemberListViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: - Cycle life
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        //Nos damos de alta en las notificaciones
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(HouseDidChange), name: Notification.Name(HOUSE_DID_CHANGE_NOTIFICATION_NAME), object: nil)
     }
-
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //Nos damos de baja en las notificaciones
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
+    }
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -78,6 +88,19 @@ class MemberListViewController: UITableViewController {
         title = "Members"
         tableView.reloadData()
         
+    }
+    
+    // MARK: - Notifications
+    @objc func HouseDidChange(notification: Notification){
+        //Extraer el UserInfo de la notificacion
+        guard let info = notification.userInfo else{ return }
+        //Sacar la casa del userInfo
+        let houseInfo = info[HOUSE_KEY] as? House
+        //Actualizar el modelo
+        member = houseInfo!.sortedMembers
+        
+        //Sincronizar la vista
+        syncModelWithView()
     }
     
 }

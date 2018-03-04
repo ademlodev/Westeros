@@ -79,13 +79,18 @@ class HouseListViewController: UITableViewController {
         //Averigurar que casa han pinchado
         let _house = house[indexPath.row]
 
-        //Avisamos al delegate
-        delegate?.HouseListViewController(self, didSelectHouse: _house)
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            //Avisamos al delegate
+            delegate?.HouseListViewController(self, didSelectHouse: _house)
+        }else if UIDevice.current.userInterfaceIdiom == .phone{
+            let houseDetailViewController = HouseDetailViewController(model: _house)
+            navigationController?.pushViewController(houseDetailViewController, animated: true)
+        }
         
         //Mando la misma info a traves de las notificaciones
         let notificationCenter = NotificationCenter.default
         
-        let notification = Notification(name: Notification.Name(HOUSE_DID_CHANGE_NOTIFICATION_NAME), object: self, userInfo: [HOUSE_KEY: house])
+        let notification = Notification(name: Notification.Name(HOUSE_DID_CHANGE_NOTIFICATION_NAME), object: self, userInfo: [HOUSE_KEY: _house])
         
         notificationCenter.post(notification)
         

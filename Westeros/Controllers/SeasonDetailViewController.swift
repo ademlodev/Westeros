@@ -30,7 +30,7 @@ class SeasonDetailViewController: UIViewController {
     // MARK: - Sync
     func syncModelWithView() {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
+        dateFormatter.dateFormat = "dd/MM/yyyy"
         
         //Model -> View
         nameSeason.text = "Season \(season.name)"

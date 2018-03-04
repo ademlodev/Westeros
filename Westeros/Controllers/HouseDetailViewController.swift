@@ -42,13 +42,7 @@ class HouseDetailViewController: UIViewController {
         backItem.title = model.name
         self.navigationItem.backBarButtonItem = backItem
     }
-    
-    override func viewDidLoad() {
-        //super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //hacer el codigo

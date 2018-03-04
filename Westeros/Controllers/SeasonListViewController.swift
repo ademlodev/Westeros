@@ -78,8 +78,13 @@ class SeasonListViewController: UITableViewController {
         //Averigurar que temporada han pinchado
         let _season = seasons[indexPath.row]
         
-        //Avisamos al delegate
-        delegate?.SeasonListViewController(self, didSelectSeason: _season)
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            //Avisamos al delegate
+            delegate?.SeasonListViewController(self, didSelectSeason: _season)
+        }else if UIDevice.current.userInterfaceIdiom == .phone{
+            let seasonDetailViewController = SeasonDetailViewController(seasonObj: _season)
+            navigationController?.pushViewController(seasonDetailViewController, animated: true)
+        }
         
         //Mando la misma info a traves de las notificaciones
         let notificationCenter = NotificationCenter.default

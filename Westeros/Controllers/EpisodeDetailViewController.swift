@@ -39,10 +39,5 @@ class EpisodeDetailViewController: UIViewController {
         //hacer el codigo
         syncModelWithView()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
 
 }
